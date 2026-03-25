@@ -1,3 +1,4 @@
+/* 
 return {
   {
     "neanias/everforest-nvim",
@@ -13,8 +14,9 @@ return {
         ui_contrast = "high",
         dim_inactive_windows = false,
       })
-    vim.o.background = "dark"
-    vim.cmd("colorscheme everforest")
+      vim.o.background = "dark"
+      vim.cmd("colorscheme everforest")
     end,
   },
 }
+*/
