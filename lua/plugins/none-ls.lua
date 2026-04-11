@@ -13,4 +13,15 @@ return {
 
     vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, {})
   end,
+  {
+    "williamboman/mason-null-ls.nvim",
+    dependencies = { "williamboman/mason.nvim", "nvimtools/none-ls.nvim" },
+    config = function()
+      require("mason-null-ls").setup({
+        -- Hier müssen die Namen rein, die Mason benutzt!
+        ensure_installed = { "eslint_d", "prettierd", "stylua" },
+        automatic_installation = true,
+      })
+    end,
+  },
 }

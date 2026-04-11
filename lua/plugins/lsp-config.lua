@@ -1,13 +1,12 @@
 return {
   {
-    "mason-org/mason.nvim",
-    opts = {},
+    "williamboman/mason.nvim",
     config = function()
       require("mason").setup()
-    end
+    end,
   },
   {
-    "mason-org/mason-lspconfig.nvim",
+    "williamboman/mason-lspconfig.nvim",
     opts = {},
     dependencies = {
       { "mason-org/mason.nvim", opts = {} },
@@ -23,27 +22,17 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
+    lazy = false,
+    dependencies = { "neovim/nvim-lspconfig" },
     config = function()
-      -- enable inline diagnostic function
-
-      -- minimale, sichere Diagnostic-Konfiguration (zeigt inline-Text + Floats)
       vim.diagnostic.config({
-        virtual_text = {
-          prefix = "●",        -- kleines Symbol vor der Nachricht (optional)
-          spacing = 2,
-        },
-        signs = true,          -- Errors in der Sign column links
-        underline = true,      -- unterstreicht fehlerhafte Stellen
-        update_in_insert = false, -- keine Live-Diagnostics beim Tippen
+        virtual_text = true, -- Zeigt den Error-Text direkt hinter der Zeile an
+        signs = true,        -- Behält das 'E' am Rand bei
+        underline = true,    -- Unterstreicht den Fehler im Code
+        update_in_insert = false,
         severity_sort = true,
       })
-
-      -- optional: float automatisch beim Verweilen über einer Stelle
-      vim.api.nvim_create_autocmd("CursorHold", {
-        callback = function() vim.diagnostic.open_float(nil, { focus = false }) end
-      })
-
-      -- configure and enable language Servers 
+      -- enable and configure language servers
       vim.lsp.config("lua_ls", {})
       vim.lsp.enable("lua_ls")
       vim.lsp.config("ts_ls", {})
@@ -55,9 +44,9 @@ return {
       vim.lsp.config("omnisharp", {})
       vim.lsp.enable("omnisharp")
       -- set keymaps
-      vim.keymap.set('n', 'K', vim.lsp.buf.hover, {}) 
-      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
-      vim.keymap.set({'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, {})
-    end
-  }
+      vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
+      vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
+      vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
+    end,
+  },
 }
